@@ -1,0 +1,12 @@
+.vinyl {
+  fill: #373737;
+}
+
+.track {
+  fill: transparent;
+  stroke: #333;
+}
+
+.label {  /* should come from album art */
+  fill: #DB4;  /* placeholder */
+}

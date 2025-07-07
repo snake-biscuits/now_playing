@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SVG Previews</title>
+    <link href="vinyl.css" rel="stylesheet" />
+    <!-- NOTE: ^ not applying to loaded svg -->
+    <style>
+      h1 {
+        display: flex;
+        font-family: sans-serif;
+        justify-content: center;
+      }
+
+      .images {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        padding: 1%;
+        gap: 1%;
+      }
+
+      .images > div {
+        display: grid;
+        align-items: center;
+        justify-content: center;
+        /* TODO: assign random background colours w/ .js */
+        border-radius: 10%;
+        padding: 2%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>SVG Previews</h1>
+    <div class="images">
+      <!-- TODO: resize to fix grid boxes -->
+      <div style="background: #865;"><img src="vinyl.78.svg" alt="10 inch 78 rpm vinyl" /></div>
+      <div style="background: #568;"><img src="vinyl.33.svg" alt="12 inch 33 & 1/3 rpm vinyl" /></div>
+      <div style="background: #685;"><img src="vinyl.45.svg" alt="7 inch 45 rpm vinyl" /></div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,33 @@
+<?xml version="1.0" standalone="no"?>
+<svg viewbox="0 0 224 224" height="224" width="224" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <!-- NOTE: can't figure out how to load a stylesheet atm -->
+  <!-- embedding in a .html and loading the stylesheet there doesn't seem to work -->
+  <style>
+    .vinyl {
+      fill: #373737;
+    }
+
+    .track {
+      fill: transparent;
+      stroke: #333;
+    }
+
+    .label {  /* should come from album art */
+      fill: #935;  /* placeholder */
+    }
+  </style>
+  <!-- spindle hole -->
+  <mask id="hole" mask-type="luminance">
+    <rect x="0" y="0" width="224" height="224" fill="#FFF" />
+    <circle cx="112" cy="112" r="4" fill="#000" />
+  </mask>
+
+  <!-- 7" 45 rpm -->
+  <circle class="vinyl" cx="112" cy="112" r="112" mask="url(#hole)"/>
+  <!-- TODO: load a label image and use another mask -->
+  <circle class="label" cx="112" cy="112" r="44" mask="url(#hole)"/>
+
+  <!-- track areas -->
+  <circle class="track" cx="112" cy="112" r="76" stroke-width="52"/>
+  <!-- TODO: little streaks and visual noise to make rotation perceptible -->
+</svg>
