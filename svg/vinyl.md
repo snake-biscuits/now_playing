@@ -12,3 +12,9 @@ Could use as a base to generate thumbnails
 Or an OpenGL rasteriser
 Re-implementing as a shader wouldn't be too hard, since it's radial shapes
 Could also do label mask, pseudo-random noise & track thicknesses that way
+
+
+## TODOs
+ - [ ] radial noise
+   light & dark arc segments from "wobble"?
+   dust specs?

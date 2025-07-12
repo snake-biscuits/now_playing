@@ -28,6 +28,8 @@
   <circle class="label" cx="176" cy="176" r="44" mask="url(#hole)"/>
 
   <!-- track areas -->
+  <!-- TODO: render areas to a mask -->
+  <!-- TODO: conic gradient for texture -->
   <circle class="track" cx="176" cy="176" r="148" stroke-width="32"/>
   <circle class="track" cx="176" cy="176" r="114" stroke-width="30"/>
   <circle class="track" cx="176" cy="176" r="82" stroke-width="28"/>
