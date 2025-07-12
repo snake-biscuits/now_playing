@@ -152,4 +152,11 @@ See: [TagStudio](https://github.com/TagStudioDev/TagStudio)
  * quick controls
 
 
+## Config
+```python
+os.path.expanduser("~/.config/now-playing/config.jsonc")
+# can python parse .jsonc? what about .ron?
+```
+
+
 [^assimp]: assimp on GitHub: [Integrate "tinyusdz" project](https://github.com/assimp/assimp/pull/5628)
