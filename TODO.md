@@ -14,6 +14,7 @@ Fingerprinting the old database's table definitions might be a cool approach
 ## Playback
 seeing lots of small-time apps using vlc or mpv on the backend
 mpv + mpd could be interesting
+`QtMultimedia.QAudio`? [Example](https://doc.qt.io/qtforpython-6.5/examples/example_multimedia_audiooutput.html)
 
 
 ## Disc Visualiser
@@ -127,6 +128,8 @@ See: [TagStudio](https://github.com/TagStudioDev/TagStudio)
  * Queue
  * Sources
    - Apple Podcasts
+   - RSS feeds
+   - YouTube / Twitch VoD (keep a link in DB)
    - ... there are others
  * Playback speed
  * Remember position between sessions
