@@ -164,5 +164,6 @@ dmypy.json
 *.out
 *.app
 
-# private database
+# private
 /db/*.data.sql
+/tmp/

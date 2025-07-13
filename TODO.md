@@ -159,4 +159,22 @@ os.path.expanduser("~/.config/now-playing/config.jsonc")
 ```
 
 
+## Bonus Goals
+ * Rich Presence
+   - track progress?
+ * Videogames
+   - schedule playtime
+   - howlongtobeat integration?
+   - retroachievements?
+   - PSN? Steam? GOG?
+ * TV Episodes
+   - add to calendar
+ * Books
+   - calibre?
+ * External Sites
+   - backlogged
+   - letterboxed
+   - myanimelist
+
+
 [^assimp]: assimp on GitHub: [Integrate "tinyusdz" project](https://github.com/assimp/assimp/pull/5628)
