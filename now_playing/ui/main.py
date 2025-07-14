@@ -22,6 +22,11 @@ class MediaEntry(QWidget):
         icon = QSvgWidget("./svg/vinyl.33.svg")
         # icon = QSvgWidget("./svg/vinyl.45.svg")
         # icon = QSvgWidget("./svg/vinyl.78.svg")
+        # TODO: resize
+        # TODO: edit vinyl svg
+        # -- change label
+        # -- change tracks
+
         label = QLabel(title)
         label.setAlignment(Qt.AlignCenter)
         label.setStyleSheet("""
@@ -35,11 +40,16 @@ class MediaEntry(QWidget):
         layout.addWidget(icon, 0, 0)
         layout.addWidget(label, 1, 0)
         self.setLayout(layout)
+        self.setStyleSheet("""
+            border-radius: 24px;
+            background-color: #49A;
+            padding: 0.25rem;
+            border: 2px solid #333;""")
 
 
 # TODO: resize to fit widget
 # -- might involve adjusting layout row & column counts
-class MediaList(QWidget):
+class MediaList(QScrollArea):
     # TODO: manage layout rows & columns
     # -- handles to push & pop entries
     # -- scrollable (QScrollArea?)
@@ -48,6 +58,12 @@ class MediaList(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
 
+        # TODO: filter controls
+
+        # TODO: get entries with a Model-View system
+        # -- then manage the grid of ui entries on resize / filter
+        # -- also need to deal with caching outside the visible area
+
         layout = QGridLayout()
         for i in range(8):
             label = MediaEntry(f"Episode {i:03d}")
@@ -55,21 +71,18 @@ class MediaList(QWidget):
             y = i // 3
             layout.addWidget(label, y, x)
 
-        self.setLayout(layout)
+        widget = QWidget()
+        widget.setLayout(layout)
+
+        self.setWidget(widget)
 
 
 def main(argv: List[str]):
     """sys.exit(main(sys.argv))"""
     app = QApplication(argv)
 
-    # TODO: contain scrollarea in a parent widget
-    # -- add a filter section
-
-    # scrollable list of media
     media_list = MediaList()
-    main_widget = QScrollArea()
-    main_widget.setWidget(media_list)
-    main_widget.show()
+    media_list.show()
 
     # TODO: visual queue organiser
 
