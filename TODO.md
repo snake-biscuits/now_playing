@@ -16,6 +16,8 @@ seeing lots of small-time apps using vlc or mpv on the backend
 mpv + mpd could be interesting
 `QtMultimedia.QAudio`? [Example](https://doc.qt.io/qtforpython-6.5/examples/example_multimedia_audiooutput.html)
 
+ * [python-mpv](https://github.com/jaseg/python-mpv)
+
 
 ## Disc Visualiser
 Inspired by Sega Dreamcast's `0GDTEX.PVR`
