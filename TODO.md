@@ -31,6 +31,10 @@ Generate a `.gif`?
 Needs to be animated w/ transparency
 APNG? SVG?
 
+> alpha channel for top side print (some cds let the shine through)
+> holographic material? (animated frames w/ a transition tied to view angle)
+> one of these: [holographic card](https://www.youtube.com/watch?v=ifZBfhl_Zmk)
+
 
 ## Vinyl View
 Good for full albums / podcasts
