@@ -142,6 +142,8 @@ See: [TagStudio](https://github.com/TagStudioDev/TagStudio)
    - Rollback a few seconds on pause/play
  * skip ~15s forward / back
  * Host & Guest Database
+   - Star Chart
+   - Other Media Connections (YT, TV etc.)
  * Groups (Same Producer, Similar Category)
  * Description Formatting
    - Cite works referenced / focus of episode
@@ -184,6 +186,23 @@ os.path.expanduser("~/.config/now-playing/config.jsonc")
    - backlogged
    - letterboxed
    - myanimelist
+
+
+## Multiple Sources
+ * Castle Super Beast
+   - Audio
+   - Timestamps Doc
+   - Youtube Clips
+   - Twitch VoD
+   - Twitch Chat
+     * XML
+     * Danmaku Playback
+     * Highlight key info / VIPs
+     * Chat Velocity Timeline
+ * Well There's Your Problem
+   - Youtube Slides
+   - John Madden-ing
+   - Devon Interjections
 
 
 [^assimp]: assimp on GitHub: [Integrate "tinyusdz" project](https://github.com/assimp/assimp/pull/5628)
