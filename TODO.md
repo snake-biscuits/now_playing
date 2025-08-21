@@ -1,5 +1,8 @@
 # TODOs
 
+## Misc
+ * Episode release date vs. planned watch/read/listen date
+
 ## Web Interface
 Would be nice to offer up, could control locally w/ my phone
 Maybe even web playback?
@@ -157,6 +160,8 @@ See: [TagStudio](https://github.com/TagStudioDev/TagStudio)
 
 ## MPRIS controls
  * allows playerctl to handle play/pause etc.
+ * [mpris-python](https://github.com/airtower-luna/mpris-python) (315 lines)
+   - [pydbus](https://github.com/LEW21/pydbus)
 
 
 ## Waybar module
@@ -203,6 +208,15 @@ os.path.expanduser("~/.config/now-playing/config.jsonc")
    - Youtube Slides
    - John Madden-ing
    - Devon Interjections
+
+
+## Youtube
+If we're collecting Youtube versions of podcasts, we could expand that
+Could collect YouTube subscriptions w/ `ytdlp`
+And assemble playlists based on channel
+As well as presets for playback speed (2x news, 1x music)
+Like `piped.video` but entirely clientside
+Get the daily updates without the recommended feed
 
 
 [^assimp]: assimp on GitHub: [Integrate "tinyusdz" project](https://github.com/assimp/assimp/pull/5628)
