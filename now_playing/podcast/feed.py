@@ -2,50 +2,22 @@
 # https://en.wikipedia.org/wiki/XPath
 from __future__ import annotations
 from datetime import datetime
-from typing import List, Tuple
-from urllib.request import urlretrieve
+from typing import List, Tuple, Union
 
 from lxml import etree
-# NOTE: we don't sanitise or check the xml in anyway
+
+from .. import utils
+
+
+# NOTE: we don't sanitise or check the xml in any way
 # -- that's really bad for security
 # -- it's not hard to make a malicious feed
 
-# https://trashfuturepodcast.podbean.com/
-# url = "https://feed.podbean.com/trashfuturepodcast/feed.xml"
 
-
-# NOTE: could use `requests` for asyncronyous downloads
-# -- can have a loading bar this way
-# -- stackoverflow example w/ `tqdm`:
-# -- https://stackoverflow.com/a/10744565
-# from tqdm import tqdm
-# import requests
-# url = "http://download.thinkbroadband.com/10MB.zip"
-# response = requests.get(url, stream=True)
-# with open("10MB", "wb") as handle:
-#     for data in tqdm(response.iter_content(chunk_size=1024), unit="kB"):
-#         handle.write(data)
-def download(feed_url: str, podcast_name: str) -> str:
-    # NOTE: could use "urllib.request.urlopen" to parse in-memory
-    # -- keeping a cache would be nicer tho
-    # -- don't need to flood podcast servers w/ traffic
-    # TODO: get "tmp/" folder from config
-    # -- should be a cache of some kind
-    # -- expose controls to flush / refresh cache to the user
-    # -- as well as date information (up-to-date check)
-    # TODO: use same extension as feed_url
-    filename, message = urlretrieve(feed_url, f"tmp/{podcast_name}.rss")
-    # TODO: validate message (http.client.HTTPMessage)
-    # NOTE: file should always be xml (can verify in HTTPMessage headers)
-    # -- possible extensions: ".atom", ".rss", ".xml"
-    return filename
-
-
-# TODO: download & cache audio
-# -- playback handled by another module (ui?)
-# -- playback state handled by db (speed, progress etc.)
 class Episode:
+    _xml: etree.Element
     # core
+    number: Union[int, str]
     title: str
     audio_url: Tuple[str, str]  # url, mime-type
     # metadata
@@ -60,6 +32,7 @@ class Episode:
         self.comments = ""
         self.description = ""
         self.guid = ""
+        self.number = "???"
         self.page = ""
         self.title = ""
         self.time = datetime.now()
@@ -71,28 +44,54 @@ class Episode:
         descriptor = f"{time} - {self.title}"
         return f"<{self.__class__.__name__} {descriptor} @ 0x{id(self):016X}>"
 
+    @property
+    def filename(self) -> str:
+        release = self.time.strftime("%Y%m%d-%H%M")
+        ep_no = self.number
+        if isinstance(ep_no, int):
+            ep_no = f"{ep_no:03d}"
+        ep_title = utils.sanitise_str(self.title)
+        if len(ep_title) > 64:
+            ep_title = f"{ep_title[:63]}-"
+        url, mime_type = self.audio_url
+        ext = url.rpartition(".")[-1]
+        return f"{release}-{ep_no}-{ep_title}.{ext}"
+
     @classmethod
     def from_element(cls, element: etree.Element) -> Episode:
         # NOTE: rss 2.0 element (atom may be different)
         out = cls()
+        out._xml = element
 
         children = {
-            child.tag: child
+            etree.QName(child.tag).localname: child
             for child in element}
 
         enclosure = children["enclosure"].attrib
         out.audio_url = (enclosure["url"], enclosure["type"])
-        out.comments = children["comments"].text
         out.description = children["description"].text
         out.guid = children["guid"].text
-        out.page = children["link"].text
         out.title = children["title"].text
+        # optionals
+        if "comments" in children:
+            out.comments = children["comments"].text
+        if "link" in children:
+            out.page = children["link"].text
+        if "episode" in children:  # itunes:episode
+            out.number = int(children["episode"].text)
 
         publish_time = children["pubDate"].text
-        # assuming format: "Fri, 11 Jul 2025 10:51:04 +0100"
+        # datetime_from_rfc_822
         # RSS date-times all conform to RFC 822, tho year *can* be 2 character
-        out.time = datetime.strptime(publish_time, "%a, %d %b %Y %H:%M:%S %z")
-        # NOTE: RFC 5005 lists multiple time formats, might need a regex switch
+        # TODO: better time string detection
+        last_word = publish_time.split(" ")[-1]
+        if not last_word.isalpha():
+            # assuming format: "Fri, 11 Jul 2025 10:51:04 +0100"
+            out.time = datetime.strptime(
+                publish_time, "%a, %d %b %Y %H:%M:%S %z")
+        else:
+            out.time = datetime.strptime(
+                publish_time, "%a, %d %b %Y %H:%M:%S %Z")
         return out
 
 
@@ -127,15 +126,18 @@ class Artwork:
         out.url = children["url"].text
         out.title = children["title"].text
         out.page = children["link"].text
-        out.size = (
-            int(children["width"].text),
-            int(children["height"].text))
+        if "width" in children and "height" in children:
+            out.size = (
+                int(children["width"].text),
+                int(children["height"].text))
+        else:
+            out.size = ("?", "?")
 
         return out
 
 
 # NOTE: Feeds come in Complete, Paged & Archive variants (RFC 5005)
-class Feed:
+class FeedFile:
     _xml: etree.ElementTree  # for debug
     artwork: Artwork
     description: str  # html
@@ -152,7 +154,7 @@ class Feed:
         self.title = ""
 
     def __repr__(self) -> str:
-        descriptor = f"{self.title} ({len(self.episodes)} episodes)"
+        descriptor = f'"{self.title}" ({len(self.episodes)} episodes)'
         return f"<{self.__class__.__name__} {descriptor} @ 0x{id(self):016X}>"
 
     # TODO: save to db
@@ -161,7 +163,7 @@ class Feed:
     # -- download a fresh .xml, compare & update
 
     @classmethod
-    def from_atom(cls, atom: etree.ElementTree) -> Feed:
+    def from_atom(cls, atom: etree.ElementTree) -> FeedFile:
         # https://datatracker.ietf.org/doc/html/rfc4287
         out = cls()
         out._xml = atom
@@ -173,7 +175,7 @@ class Feed:
         return out
 
     @classmethod
-    def from_rss(cls, rss: etree.ElementTree) -> Feed:
+    def from_rss(cls, rss: etree.ElementTree) -> FeedFile:
         # https://en.wikipedia.org/wiki/RSS
         # https://www.rssboard.org/rss-specification
         out = cls()
@@ -212,10 +214,11 @@ class Feed:
         return out
 
     @classmethod
-    def from_file(cls, filename: str) -> Feed:
+    def from_file(cls, filename: str) -> FeedFile:
         xml = etree.parse(filename)
         root = xml.getroot()
-        if root.tag == "rss" and root.get("version") == "2.0":
+        if root.tag == "rss":
+            assert root.get("version") == "2.0"
             return cls.from_rss(xml)
         elif root.tag == "feed":
             return cls.from_atom(xml)

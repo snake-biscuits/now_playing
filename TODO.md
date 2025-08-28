@@ -162,6 +162,9 @@ See: [TagStudio](https://github.com/TagStudioDev/TagStudio)
  * allows playerctl to handle play/pause etc.
  * [mpris-python](https://github.com/airtower-luna/mpris-python) (315 lines)
    - [pydbus](https://github.com/LEW21/pydbus)
+ * [mpris-notifier](https://github.com/l1na-forever/mpris-notifier/)
+   - almost useful, but annoyingly limited
+   - a good reference to build on tho
 
 
 ## Waybar module
@@ -209,10 +212,15 @@ os.path.expanduser("~/.config/now-playing/config.jsonc")
    - John Madden-ing
    - Devon Interjections
 
+### Download Settings
+ - No Download (Only Track Updates)
+ - Audio Only
+ - Video Only
+
 
 ## Youtube
 If we're collecting Youtube versions of podcasts, we could expand that
-Could collect YouTube subscriptions w/ `ytdlp`
+Could collect YouTube subscriptions w/ `yt-dlp`
 And assemble playlists based on channel
 As well as presets for playback speed (2x news, 1x music)
 Like `piped.video` but entirely clientside
