@@ -25,6 +25,7 @@ Vid.Patreons (get via Sponsorblock?)
 
  * Subscribed
    - Latest (get the latest episode)
+     - Catch Up (FromEpisode -> Latest)
    - Subset (filter)
    - Headlines (tracking updates, no downloads)
    - Binge (everything from the start)
@@ -89,9 +90,13 @@ Vid.Patreons (get via Sponsorblock?)
 
 
 ## Queue Construction
- * `Pile + Rules -> Dynamic Queue`
+ * `Pile + Goals -> Dynamic Queue`
  * Related to Subscription Plan
  * Playback Queue informs Download Queue
+
+### Goals
+ * Watch / Listen Before / After (other media)
+ * Finish By (datetime)
 
 
 ## `.sql` db

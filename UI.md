@@ -7,9 +7,39 @@ Being able to do layout in html & css
 Haven't gotten deep into trying that, but would still like to try
 
 
+## Kanban View
+Dynamic (machine updated)
+Drag in media to build a queue
+
+
+## Friend Schedules
+Plan to watch with friends
+Bookclub
+Sleep Schedules?
+Don't be a stalker about it
+
+
+## Queue Planning
+ * Grab a pile of Media
+   - Estimated Runtime (w/ & w/o breaks)
+ * Automated Rule Checks (red/green indicators)
+ * "Best Fit" algo
+ * Estimated Finish Time
+ * Time Range Conditions
+   - Driving: No Video
+   - Exercise: Music BPM range & Genre
+
+
 ## Migrate Database
 Database might change in future versions, need a process to update the database
 Fingerprinting the old database's table definitions might be a cool approach
+
+### Versioning
+```sql
+CREATE TABLE IF NOT EXISTS Version (server VARCHAR, release DATETIME);
+```
+single entry per `user.db`
+`user.db.v1.0.bak`
 
 
 ## Playback
