@@ -165,5 +165,4 @@ dmypy.json
 *.app
 
 # private
-/db/*.data.sql
-/tmp/
+/now_playing/db/*.data.sql

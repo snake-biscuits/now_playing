@@ -9,12 +9,12 @@ CREATE TABLE IF NOT EXISTS CompactDisc (
 
 
 CREATE TABLE IF NOT EXISTS CDTrack (
-    track_cd      VARCHAR  NOT NULL,
-    disc_number   INTEGER  NOT NULL, -- usually 1
-    track_number  INTEGER  NOT NULL,
-    track_name    VARCHAR  NOT NULL,
-    track_length  INTEGER  NOT NULL,  -- in seconds
-    FOREIGN KEY track_cd REFERENCES CompactDisc(catalog_number)
+    cd       VARCHAR  NOT NULL,
+    disc     INTEGER  NOT NULL, -- usually 1
+    track    INTEGER  NOT NULL,
+    name     VARCHAR  NOT NULL,
+    seconds  INTEGER  NOT NULL,  -- length
+    FOREIGN KEY cd REFERENCES CompactDisc(catalog_number)
 );
 
  -- TODO: AlbumCD (Album, CompactDisc, disc_number)
