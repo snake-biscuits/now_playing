@@ -12,6 +12,7 @@ from . import feed
 class Client:
     def __init__(self):
         self.feeds = dict()
+        self.names = dict()
         self.errors = {
             "download": dict(),
             "parse": dict()}
@@ -19,7 +20,8 @@ class Client:
     def refresh(self):
         subscriptions = config.pod_subscriptions()
         for sub in subscriptions["podcasts"]:
-            name, url = sub["name"], sub["url"]
+            name, guid, url = sub["name"], sub["guid"], sub["url"]
+            self.names[guid] = name
             # create download folder, if needed
             podcast_folder = config.pod_folder(name)
             if not os.path.exists(podcast_folder):
@@ -31,19 +33,19 @@ class Client:
                     fn = download.feed_file(name, url)
                     assert fn == feed_fn, f"{feed_fn=}, {fn=}"
                 except urllib.error.HTTPError as exc:
-                    self.errors["download"][name] = exc
+                    self.errors["download"][guid] = exc
             # parse feed file
             try:
-                self.feeds[name] = feed.FeedFile.from_file(feed_fn)
+                self.feeds[guid] = feed.FeedFile.from_file(feed_fn)
             except Exception as exc:
-                self.errors["parse"][name] = exc
+                self.errors["parse"][guid] = exc
 
-    def list_episodes(self, podcast_name: str, count: int, direction: int = 1):
+    def list_episodes(self, guid: str, count: int, direction: int = 1):
         if direction == -1:
             start, stop, step = -1, -count, -1
         else:
             start, stop, step = 0, count, 1
-        pod = self.feeds[podcast_name]
+        pod = self.feeds[guid]
         for episode in pod.episodes[start:stop:step]:
             user_tz = datetime.now().astimezone().tzinfo
             local_time = episode.time.astimezone(user_tz)
@@ -51,6 +53,7 @@ class Client:
             index = pod.episodes.index(episode)
             print(f"{index:03d} | {release} | {episode.title}")
 
-    def download(self, podcast_name: str, index: int) -> str:
-        episode = self.feeds[podcast_name].episodes[index]
+    def download(self, guid: str, index: int) -> str:
+        episode = self.feeds[guid].episodes[index]
+        podcast_name = self.names[guid]
         return download.episode(podcast_name, episode)

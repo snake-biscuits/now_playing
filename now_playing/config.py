@@ -15,14 +15,14 @@ path = {
 
 
 # TODO: config data / files
-# - root/queue (rich table)
+# - root/queue.txt (rich table)
 # - root/nprc (config file)
 # - root/user.db
 # - pods/.feeds/*.rss
+# - pods/.feeds/subscriptions.json (rich table)
 # - pods/Podcast/*.* (audio)
-# - pods/subscriptions (rich table)
 # - subs/Channel/*.* (video)
-# - subs/subscriptions (rich table)
+# - subs/.feeds/subscriptions.json (rich table)
 
 # - NOTE: "rich table" format will likely be `.json`
 # - should really handle this with SlopChewy
@@ -41,7 +41,8 @@ def pod_folder(podcast_name: str) -> str:
 
 
 def pod_subscriptions():
-    subscriptions_file = os.path.join(path["pods"], "subscriptions.json")
+    subscriptions_file = os.path.join(
+        path["pods"], ".feeds", "subscriptions.json")
     with open(subscriptions_file) as json_file:
         subscriptions = json.load(json_file)
     return subscriptions
