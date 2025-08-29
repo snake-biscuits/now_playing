@@ -1,5 +1,5 @@
 __all__ = [
-    "cd", "config", "db", "podcast", "utils",
+    "cd", "config", "db", "podcast", "utils", "youtube",
     "PodcastClient"]
 
 from . import cd
@@ -9,6 +9,6 @@ from . import db
 from . import podcast
 # from . import ui
 from . import utils
-# from . import youtube
+from . import youtube
 
 from .podcast import Client as PodcastClient

@@ -1,12 +1,12 @@
 # TODOs
 
  - [ ] Youtube
-Youtube API to collect new videos?
-`yt-dlp` downloads
- - [x] Download
-   - [x] Python: `yt-dlp`
- - [ ] Playback
-   - [ ] Python: `mpv`
+   - [x] Feed Parser
+     - [x] `yt-dlp`
+   - [x] Download
+     - [x] Python: `yt-dlp`
+   - [ ] Playback
+     - [ ] Python: `mpv`
  - [ ] Podcasts
    - [x] Feed Parser
      - [x] Python: `lxml`
@@ -24,6 +24,23 @@ Youtube API to collect new videos?
 > --  * Less controls (quality / codec etc.)
 > --  * No offline copies
 > --  * Buffering
+
+
+## Collecting Youtube Subscriptions w/ `yt-dlp`
+```bash
+$ yt-dlp
+  :ytsubs
+  --cookies-from-browser firefox
+  --lazy-playlist
+  --dateafter today-0days
+  --playlist-end 50
+  --simulate
+  --print "%(release_date,upload_date)s | %(channel)s | %(title)s"
+```
+
+> using `--playlist-end 50` since `--break-on-reject` breaks on livestreams
+> can also use `yt-dlp` to download thumbnails or "storyboard"
+> TODO: get `id` & `channel_id` & assemble a `.json`
 
 
 ## Podcasts
