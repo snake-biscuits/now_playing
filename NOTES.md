@@ -2,26 +2,8 @@
 
 ## Tagging
 
-**Option Tags**
+### Option Tags
 Must choose one from the subset
-
-**State Tags**
-Tags change within a state machine (python)
-
-> Download.Queued -> InProgress -> Complete
-
-**Tag Transission**
-e.g. Podcast `Subscribed.*` -> Episode `Download.Queued`
-
-
-**Show Segment**
-WTYP.TheGoddamNews
-WTYP.SafetyThird
-TF.Interview
-Pod.Intro
-Pod.Announcements
-Pod.Patreons
-Vid.Patreons (get via Sponsorblock?)
 
  * Subscribed
    - Latest (get the latest episode)
@@ -48,6 +30,25 @@ Vid.Patreons (get via Sponsorblock?)
    - Chapter
    - Highlight
 
+### State Tags
+Tags change within a state machine (python)
+`Download.Queued -> InProgress -> Complete`
+
+### Tag Transission
+e.g. Podcast `Subscribed.*` -> Episode `Download.Queued`
+
+### Show Segment
+ * Pod.Intro
+ * Pod.Announcements
+ * Pod.Patreons
+ * Vid.Patreons (get via Sponsorblock?)
+ * WTYP.TheGoddamNews
+ * WTYP.SafetyThird
+ * TF.Interview
+
+### Spoiler Tags
+ * `Spoiler | for | Media`
+ * Should influence queuing goals
 
 
 ## Grouping
