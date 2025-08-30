@@ -9,6 +9,7 @@ from . import feed
 
 # TODO: queue
 # TODO: downloaded episodes
+# TODO: delete stale downloads
 class Client:
     def __init__(self):
         self.feeds = dict()
@@ -16,6 +17,10 @@ class Client:
         self.errors = {
             "download": dict(),
             "parse": dict()}
+
+    def __repr__(self) -> str:
+        descriptor = f"{len(self.feeds)} feeds"
+        return f"<{self.__class__.__name__} {descriptor} @ 0x{id(self):016X}>"
 
     def refresh(self):
         subscriptions = config.pod_subscriptions()
@@ -27,6 +32,8 @@ class Client:
             if not os.path.exists(podcast_folder):
                 os.mkdir(podcast_folder)
             # fetch feed file
+            # TODO: break out into own method
+            # -- update stale feeds (w/ backup)
             feed_fn = config.pod_feed(name)
             if not os.path.exists(feed_fn):
                 try:
