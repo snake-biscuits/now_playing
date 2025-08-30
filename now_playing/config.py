@@ -32,6 +32,8 @@ path = {
 
 # TODO: load config file & override paths
 
+# TODO: mkdirs if not exists
+
 
 def pod_feed(podcast_name: str) -> str:
     podcast_name = utils.sanitise_str(podcast_name)
@@ -40,7 +42,10 @@ def pod_feed(podcast_name: str) -> str:
 
 def pod_folder(podcast_name: str) -> str:
     podcast_name = utils.sanitise_str(podcast_name)
-    return os.path.join(path["pods"], podcast_name)
+    folder = os.path.join(path["pods"], podcast_name)
+    if not os.path.exists(folder):
+        os.mkdir(folder)
+    return folder
 
 
 def pod_subscriptions() -> Dict[str, Any]:

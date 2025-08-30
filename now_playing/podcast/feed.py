@@ -2,6 +2,7 @@
 # https://en.wikipedia.org/wiki/XPath
 from __future__ import annotations
 from datetime import datetime
+import os
 from typing import List, Tuple, Union
 
 from lxml import etree
@@ -54,7 +55,7 @@ class Episode:
         if len(ep_title) > 64:
             ep_title = f"{ep_title[:63]}-"
         url, mime_type = self.audio_url
-        ext = url.rpartition(".")[-1]
+        ext = url.rpartition(".")[-1].partition("?")[0]
         return f"{release}-{ep_no}-{ep_title}.{ext}"
 
     @classmethod
@@ -144,6 +145,9 @@ class FeedFile:
     episodes: List[Episode]
     page: str  # url
     title: str
+    time: datetime
+    ttl: int  # minutes until stale
+    url: str
 
     def __init__(self):
         self._xml = None
@@ -152,6 +156,9 @@ class FeedFile:
         self.episodes = list()
         self.path = ""
         self.title = ""
+        self.time = datetime.now()
+        self.ttl = 1440  # 24hrs
+        self.url = ""
 
     def __repr__(self) -> str:
         descriptor = f'"{self.title}" ({len(self.episodes)} episodes)'
@@ -160,7 +167,8 @@ class FeedFile:
     # TODO: save to db
     # TODO: load from db
     # TODO: update from url
-    # -- download a fresh .xml, compare & update
+    # -- download a fresh FeedFile, compare & update
+    # -- backup before overwriting with new file
 
     @classmethod
     def from_atom(cls, atom: etree.ElementTree) -> FeedFile:
@@ -190,6 +198,11 @@ class FeedFile:
         out.title = channel.xpath("title")[0].text
         out.page = channel.xpath("link")[0].text
         out.description = channel.xpath("description")[0].text
+        ttls = rss.xpath("/rss/ttl")
+        out.ttl = int(ttls[0].text) if len(ttls) > 0 else 1440  # 24h
+        # TODO: url <atom:link href="..." rel="self">
+        urls = rss.xpath("/rss/channel/*[local-name()='link'][@rel='self']")
+        out.url = urls[0].get("href") if len(urls) > 0 else ""
 
         # TODO: optional metadata
         # -- lastBuildDate
@@ -197,7 +210,6 @@ class FeedFile:
         # -- copyright
         # -- generator
         # -- language
-        # -- ttl (time to live; minutes until cache should refresh; 1440m=24h)
 
         # NOTE: "image" element is optional
         # -- so we use a for loop
@@ -206,6 +218,7 @@ class FeedFile:
             out.artwork = Artwork.from_element(image)
             # NOTE: some podcasts can have per-episode art too
             # -- is this part of the itunes spec?
+            # -- sometimes embedded in the `.mp3`
 
         out.episodes = [
             Episode.from_element(item)
@@ -219,9 +232,11 @@ class FeedFile:
         root = xml.getroot()
         if root.tag == "rss":
             assert root.get("version") == "2.0"
-            return cls.from_rss(xml)
+            out = cls.from_rss(xml)
         elif root.tag == "feed":
-            return cls.from_atom(xml)
+            out = cls.from_atom(xml)
         else:
             raise NotImplementedError(
                 f"cannot get feed from XML w/ root: '{root.tag}'")
+        out.time = datetime.fromtimestamp(os.path.getmtime(filename))
+        return out
