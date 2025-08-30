@@ -5,7 +5,7 @@ __all__ = [
 from . import cd
 from . import config
 from . import db
-# from . import playback (python-mpv)
+# from . import playback (mpv, queue)
 from . import podcast
 # from . import ui
 from . import utils
