@@ -2,47 +2,37 @@ from typing import Any, Dict, List
 
 import yt_dlp
 
-
-# TODO: feed.Video.from_json(entry)
-Video = Dict[str, Any]
-# ^ {"id": str, ...}
-VideoList = List[Video]
+from . import feed
 
 
-def subscriptions_list(since: str = "now-1day", limit: int = 50) -> VideoList:
+# TODO: Logger class
+
+
+def playlist_info(url: str, **extra_options) -> Dict[str, Any]:
+    """returns json-serialisable yt-dlp info"""
     options = {
-        "cookiesfrombrowser": ("firefox",),
-        "daterange": yt_dlp.utils.DateRange(start=since),
         "ignoreerrors": "only_download",
-        "lazy_playlist": True,
-        "playlistend": limit,
         "quiet": True,
         "simulate": True}
-    # TODO: use a logger rather than "quiet"
-
+    options.update(extra_options)
     with yt_dlp.YoutubeDL(options) as ydl:
-        info = ydl.sanitize_info(ydl.extract_info(":ytsubs", download=False))
-
-    # collect everything we need to present to the user
-    # let them decide on downloads etc.
-    keys = (
-        "id", "title",
-        "channel_id", "channel",
-        "upload_date", "timestamp",
-        "media_type", "duration",
-        "thumbnail", "view_count", "description")
-
-    videos = [
-        {key: entry.get(key, None) for key in keys}
-        for entry in info["entries"]
-        if entry is not None]
-
-    # NOTE: daterange doesn't appear to be filtering out videos
-    # TODO: fine, I'll do it myself.
-
-    return videos
+        info = ydl.sanitize_info(ydl.extract_info(url, download=False))
+        # NOTE: it'd be cool if we could yield each entry as we load it
+        # -- just for faster paralellism
+        # -- progress indicators would be cool too
+        # -- a logger class might help enable this
+    return info
 
 
-# TODO: download youtube videos
-# -- sponsorblock settings from config
-# -- or just use a yt-dlp config file
+# NOTE: ideally called in batches w/ the same settings
+# -- e.g. sponsorblock modes, chat / subtitles etc.
+# -- can also use yt-dlp config files from config folder
+def videos(video_list: List[feed.Video], **extra_options) -> int:
+    options = {
+        "ignoreerrors": "only_download",
+        "quiet": True,
+        "simulate": False}
+    options.update(extra_options)
+    with yt_dlp.YoutubeDL(options) as ydl:
+        error_code = ydl.download([video.url for video in video_list])
+        return error_code
