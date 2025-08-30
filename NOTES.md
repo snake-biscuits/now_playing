@@ -26,7 +26,7 @@ Must choose one from the subset
    - 1.5x
    - 1.75x
    - 2x
- * Timestam
+ * Timestamp
    - Chapter
    - Highlight
 
@@ -45,6 +45,8 @@ e.g. Podcast `Subscribed.*` -> Episode `Download.Queued`
  * WTYP.TheGoddamNews
  * WTYP.SafetyThird
  * TF.Interview
+
+> skip CSB.Highlight videos watched within Audio Episodes
 
 ### Spoiler Tags
  * `Spoiler | for | Media`

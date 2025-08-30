@@ -138,4 +138,16 @@ Like `piped.video` but entirely clientside
 Get the daily updates without the recommended feed
 
 
+## System Tray
+Is it possible w/ Qt?
+
+
+## Download Rules
+`Tags -> Download Flags`
+ * Sponsorblock settings
+ * `Lang.JP and !Lang.EN -> --write-subs=en`
+ * `StreamVoD/Premiere -> --write-chat`
+ * `CommentarySubs -> --write-subs=en`
+
+
 [^assimp]: assimp on GitHub: [Integrate "tinyusdz" project](https://github.com/assimp/assimp/pull/5628)

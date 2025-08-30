@@ -62,7 +62,7 @@ mpv + mpd could be interesting
  * Needs to be animated w/ transparency
  * APNG? SVG?
 
- * alpha channel for top side print 
+ * alpha channel for top side print
    - some cds let the shine through
  * holographic material / shader
    - animated frames w/ a transition tied to view angle
@@ -131,7 +131,7 @@ the most satisfying animation would be clicking into a player though
  * `notify-send`
  * generated album art gif
    - CD / Vinyl
-   - 45, A-Side, B-Side, 
+   - 45, A-Side, B-Side,
 
 > just this would be worth everything
 > would be a great script to attach to mpd
@@ -161,3 +161,23 @@ See: [TagStudio](https://github.com/TagStudioDev/TagStudio)
    - misc.
  * `.usd` of jewel case + accessories would be neat
 
+
+## TTS DJ
+> See Bird Brain Radio by LK Corvus
+
+ * Announcer
+   - Sponsorblock skips
+   - Track Changes
+   - Time Remaining
+   - Description Snippet
+ * Scripted Segments
+   - Skits
+   - Radio Show (reading newsletter feed / headlines)
+ * Banners
+   - Effects Heavy Ads for the Station
+ * Software
+   - UTAU / SynthV / Vocaloid?
+   - DJ Miku?
+ * Schedule / Station
+   - Assign DJ by Tag(s)
+   - Broadcast Slots w/ Mood Tags
