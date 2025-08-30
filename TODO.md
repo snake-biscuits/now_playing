@@ -91,7 +91,8 @@ os.path.expanduser("~/.config/now-playing/config.jsonc")
 
 ## Bonus Goals
  * Rich Presence
-   - track progress?
+   - track data
+   - playhead
  * Videogames
    - schedule playtime
    - howlongtobeat integration?
@@ -105,6 +106,18 @@ os.path.expanduser("~/.config/now-playing/config.jsonc")
    - backlogged
    - letterboxed
    - myanimelist
+ * Studio
+   - Live DJ/VJ your media collection
+   - Pull Samples from Podcasts & Videos
+   - Make YTP w/ VeeDee
+ * Task Scheduling
+   - Exercise playlist
+   - Chill Music Before Bed
+   - Second Screen Content Only
+   - Touch Grass
+ * Live Streams
+   - is it possible w/ yt-dlp & mpv?
+   - how many features will still work?
 
 
 ## Multiple Sources
@@ -130,12 +143,37 @@ os.path.expanduser("~/.config/now-playing/config.jsonc")
 
 
 ## Youtube
-If we're collecting Youtube versions of podcasts, we could expand that
-Could collect YouTube subscriptions w/ `yt-dlp`
-And assemble playlists based on channel
-As well as presets for playback speed (2x news, 1x music)
-Like `piped.video` but entirely clientside
-Get the daily updates without the recommended feed
+ - [ ] subscriptions
+   - [x] info `.json`
+   - [ ] shorts (check yt-dlp issues)
+   - [ ] download
+     - [ ] thumbnails
+     - [ ] "storyboards"
+     - [ ] videos
+     - [ ] progress indicator(s)
+ - [ ] tag rules
+   - [ ] playback speed
+   - [ ] audio only
+   - [ ] main screen content vs. second screen content
+ - [ ] auto-tagging
+   - [ ] channel tag transmission
+   - [ ] duration & `media_type` filters
+ - [ ] timestamps
+   - [ ] chapter > highlight heirarchy
+   - [ ] colour coding
+   - [ ] from sponsorblock
+   - [ ] from comments
+     - [ ] prioritise pinned / hearted
+     - [ ] common user id / keyword for channel (e.g. "<vtuber>cord")
+     - [ ] auto-tag & filter (e.g. ignore "TSKR")
+ - [ ] subtitles
+   - [ ] commentary
+   - [ ] non-english
+   - [ ] karaoke
+   - [ ] live chat replay
+
+> NOTE: I don't care about machine-generated subs & dubs
+> TODO: tag / link JP & EN channel variants
 
 
 ## System Tray
