@@ -1,6 +1,7 @@
 from __future__ import annotations
 from datetime import datetime
 import json
+# import os
 from typing import Any, Dict, Tuple, List
 
 
@@ -113,5 +114,5 @@ class SubsCache:
             info = json.load(json_file)
         out = cls.from_json(info)
         out.time = datetime.strptime(filename[:13], "%Y%m%d-%H%M")
-        # NOTE: could also use os.ctime / os.mtime
+        # out.time = datetime.fromtimestamp(os.path.getmtime(filename))
         return out
