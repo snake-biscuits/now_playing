@@ -61,6 +61,8 @@ class Client:
                 print(f'"{guid}" is stale! updating...')
                 shutil.move(feed_file, feed_file + ".bak")
                 self.download_feed(guid)
+        else:  # no FeedFile
+            self.download_feed(guid)
         self.fetch_feed(guid)
 
     def download_feed(self, guid: str):
