@@ -42,7 +42,7 @@ class Episode:
         user_tz = datetime.now().astimezone().tzinfo
         # NOTE: could also use zoneinfo.ZoneInfo("Country/State")
         time = self.time.astimezone(user_tz).strftime("%a, %d %b %Y %H:%M")
-        descriptor = f"{time} - {self.title}"
+        descriptor = f'{time} - "{self.title}"'
         return f"<{self.__class__.__name__} {descriptor} @ 0x{id(self):016X}>"
 
     @property
@@ -112,7 +112,7 @@ class Artwork:
 
     def __repr__(self) -> str:
         width, height = self.size
-        descriptor = f"{self.title} {width}x{height}"
+        descriptor = f'"{self.title}" {width}x{height}'
         return f"<{self.__class__.__name__} {descriptor} @ 0x{id(self):016X}>"
 
     @classmethod
