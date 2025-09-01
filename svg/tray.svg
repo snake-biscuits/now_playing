@@ -1,0 +1,43 @@
+<svg viewbox="0 0 64 64" height="64" width="64" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="lin_grad">
+      <stop stop-color="#E07" offset="0%"/>
+      <stop stop-color="#A5A" offset="33%"/>
+      <stop stop-color="#A5A" offset="66%"/>
+      <stop stop-color="#04B" offset="100%"/>
+    </linearGradient>
+    <radialGradient id="rad_grad"
+     cx=".5" cy=".5" r=".3"
+     spreadMethod="reflect">
+      <stop stop-color="#BBB" offset="35%"/>
+      <stop stop-color="#68B" stop-opacity="40%" offset="45%"/>
+      <stop stop-color="#6B6" stop-opacity="40%" offset="50%"/>
+      <stop stop-color="#B68" stop-opacity="40%" offset="55%"/>
+      <stop stop-color="#BBB" offset="65%"/>
+    </radialGradient>
+  </defs>
+  <style>
+  .plate {
+    fill: url("#rad_grad");
+  }
+  </style>
+  <mask id="silhouette" mask-type="luminance">
+    <rect x="0" y="0" width="64" height="64" fill="#000"/>
+    <!-- disc -->
+    <circle cx="32" cy="32" r="32" fill="#FFF"/>
+    <circle cx="32" cy="32" r="6" fill="#000"/>
+    <!-- stylus -->
+    <g transform="rotate(5)" transform-origin="60 4">
+      <path d="
+       M 54 4 l 2 -2 h 6 l 2 2 v 10 l -2 2 h -2
+       c 0 16, 0 24, -12 36
+       v 2 l -6 4 l -2 -1 l -2 -3"
+       stroke-width="2" stroke="#000" fill="#FFF"/>
+    </g>
+  </mask>
+
+  <g mask="url(#silhouette)">
+    <rect class="plate" x="0" y="0" width="64" height="64"/>
+  </g>
+</svg>
+
