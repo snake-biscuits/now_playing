@@ -2,7 +2,7 @@ from __future__ import annotations
 from datetime import datetime
 import os
 import shutil
-from typing import Dict, Tuple
+from typing import Dict, List, Tuple
 import urllib
 
 from .. import config
@@ -11,6 +11,7 @@ from . import feed
 
 
 class Client:
+    _log: List[str]
     errors: Dict[str, Dict[str, Exception]]
     # ^ {"download/parse": {"guid": Error}}
     feeds: Dict[str, feed.FeedFile]
@@ -19,6 +20,7 @@ class Client:
     # ^ {"guid": ("name", "url")}
 
     def __init__(self):
+        self._log = list()
         self.errors = {
             "download": dict(),
             "parse": dict()}
@@ -30,6 +32,9 @@ class Client:
     def __repr__(self) -> str:
         descriptor = f"{len(self.feeds)} feeds"
         return f"<{self.__class__.__name__} {descriptor} @ 0x{id(self):016X}>"
+
+    def log(self, *args, sep=" "):
+        self._log.append(sep.join(map(str, args)))
 
     # subscriptions
     def fetch_subscriptions(self):
@@ -50,6 +55,7 @@ class Client:
     def update_feed(self, guid: str, now=False):
         feed_file = self.feed_filename(guid)
         if now:
+            self.log(f'forcing update for "{guid}"')
             shutil.move(feed_file, feed_file + ".bak")
             self.download_feed(guid)
         elif os.path.exists(feed_file):
@@ -58,14 +64,16 @@ class Client:
             feed = self.feeds[guid]
             minutes_old = (datetime.now() - feed.time).total_seconds() / 60
             if minutes_old > feed.ttl:
-                print(f'"{guid}" is stale! updating...')
+                self.log(f'"{guid}" is stale!')
                 shutil.move(feed_file, feed_file + ".bak")
                 self.download_feed(guid)
         else:  # no FeedFile
+            self.log(f'no feed found for "{guid}"!')
             self.download_feed(guid)
         self.fetch_feed(guid)
 
     def download_feed(self, guid: str):
+        self.log(f'download_feed("{guid}")')
         if guid in self.errors["download"]:
             self.errors["download"].pop(guid)
         name, url = self.subscriptions[guid]
@@ -108,6 +116,8 @@ class Client:
 
     def download(self, guid: str, index: int) -> str:
         episode = self.feeds[guid].episodes[index]
+        ep_repr = f'{episode.number} - "{episode.title}"'
+        self.log(f'download("{guid}", index) [{ep_repr}]')
         podcast_name, url = self.subscriptions[guid]
         return download.episode(podcast_name, episode)
 
