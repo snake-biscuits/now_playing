@@ -3,7 +3,7 @@
 
 CREATE TABLE IF NOT EXISTS Tag (
     name         VARCHAR  NOT NULL  UNIQUE,
-    description  VARCHAR,
+    description  VARCHAR
 );
 -- NOTE: a tag can be a link to another table
 -- might need some special indicator for these tags
@@ -19,13 +19,13 @@ CREATE TABLE IF NOT EXISTS Tagged (
     row_id    INTEGER  NOT NULL,
     untag     BOOLEAN,  -- NULL == false
     FOREIGN KEY (tag) REFERENCES Tag(rowid),
-    FOREIGN KEY (cat) REFERENCES TaggableTable(rowid),
+    FOREIGN KEY (category) REFERENCES TaggableTable(rowid)
 );
 
 CREATE TABLE IF NOT EXISTS TagAlias (
     tag    INTEGER  NOT NULL,
     alias  VARCHAR  NOT NULL  UNIQUE,
-    FOREIGN KEY (tag) REFERENCES Tag(rowid),
+    FOREIGN KEY (tag) REFERENCES Tag(rowid)
 );
 
 -- Baba Is You inspired system
@@ -35,6 +35,6 @@ CREATE TABLE IF NOT EXISTS TagRelation (
     relation  INTEGER  NOT NULL,
     main_tag  INTEGER  NOT NULL,
     FOREIGN KEY (sub_tag) REFERENCES Tag(rowid),
-    FOREIGN KEY (main_tag) REFERENCES Tag(rowid),
+    FOREIGN KEY (main_tag) REFERENCES Tag(rowid)
 );
 -- e.g. TTRPG | is subset of | RPG

@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS Subscription (
     -- NOTE (media, outlet) must be unqiue
     FOREIGN KEY (media) REFERENCES Media(rowid),  -- Podcast or Channel
     -- outlet references either Podcast or Channel
-    FOREIGN KEY (pattern) REFERENCES SubPattern(rowid),
+    FOREIGN KEY (pattern) REFERENCES SubPattern(rowid)
 );
 
 CREATE TABLE IF NOT EXISTS PodcastChannel (
@@ -17,5 +17,5 @@ CREATE TABLE IF NOT EXISTS PodcastChannel (
     channel  VARCHAR  NOT NULL,
     -- flag for highlight channel / video episodes?
     FOREIGN KEY (podcast) REFERENCES Podcast(name),
-    FOREIGN KEY (channel) REFERENCES Channel(guid),
+    FOREIGN KEY (channel) REFERENCES Channel(guid)
 );

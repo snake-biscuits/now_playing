@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS Media (
-    name  VARCHAR  NOT NULL  UNIQUE,
+    name  VARCHAR  NOT NULL  UNIQUE
 );
 
 INSERT INTO Media(name) VALUES
@@ -8,7 +8,7 @@ INSERT INTO Media(name) VALUES
 
 
 CREATE TABLE IF NOT EXISTS SubPattern (
-    name  VARCHAR  NOT NULL  UNIQUE,
+    name  VARCHAR  NOT NULL  UNIQUE
 );
 
 INSERT INTO SubPattern(name) VALUES

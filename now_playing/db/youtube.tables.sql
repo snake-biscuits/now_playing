@@ -2,7 +2,7 @@
 
 CREATE TABLE IF NOT EXISTS Channel (
     name  VARCHAR NOT NULL  UNIQUE,
-    guid  VARCHAR NOT NULL,  -- @ChannelName etc.
+    guid  VARCHAR NOT NULL  -- @ChannelName etc.
 );
 
 CREATE TABLE IF NOT EXISTS ChannelVideo (
@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS ChannelVideo (
     release_date  VARCHAR  NOT NULL,
     runtime       INTEGER  NOT NULL,
     guid          VARCHAR  NOT NULL,  -- watch?v={GUID}
-    FOREIGN KEY (channel) REFERENCES Channel(guid),
+    FOREIGN KEY (channel) REFERENCES Channel(guid)
 );
 
 CREATE TABLE IF NOT EXISTS VideoDownload (
@@ -19,5 +19,5 @@ CREATE TABLE IF NOT EXISTS VideoDownload (
     downloaded  VARCHAR  NOT NULL,  -- timestamp
     filesize    INTEGER  NOT NULL,  -- in bytes
     filename    VARCHAR  NOT NULL,
-    FOREIGN KEY (video) REFERENCES ChannelVideo(guid),
+    FOREIGN KEY (video) REFERENCES ChannelVideo(guid)
 );

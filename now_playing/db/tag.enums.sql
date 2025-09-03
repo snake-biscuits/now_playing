@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS TaggableTable (
-    name  VARCHAR  NOT NULL  UNIQUE,
+    name  VARCHAR  NOT NULL  UNIQUE
 );
+
 INSERT INTO TaggableTable(name) VALUES
     -- cd
     ('CDTrack'),
@@ -20,9 +21,10 @@ INSERT INTO TaggableTable(name) VALUES
 
 -- NOTE: transmission is implemented in python
 CREATE TABLE IF NOT EXISTS Relation (
-    name  VARCHAR  NOT NULL  UNIQUE,
+    name  VARCHAR  NOT NULL  UNIQUE
 );
-INSERT INTO Relation(name) VALUES (
+
+INSERT INTO Relation(name) VALUES
     ('is subset of'),
     ('is in genre'),
     ('is author of');

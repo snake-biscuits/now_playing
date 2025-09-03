@@ -4,5 +4,5 @@ CREATE TABLE IF NOT EXISTS Timestamp (
     start_time  VARCHAR  NOT NULL,
     end_time    VARCHAR,  -- use NULL for single point markers (or chapter start)
     title       VARCHAR,
-    details     VARCHAR,
+    details     VARCHAR
 );

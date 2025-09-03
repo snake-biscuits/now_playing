@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS Podcast (
     name  VARCHAR NOT NULL  UNIQUE,
     guid  VARCHAR NOT NULL  UNIQUE,  -- abbreviation
-    url   VARCHAR NOT NULL,
+    url   VARCHAR NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS PodcastEpisode (
@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS PodcastEpisode (
     release_date  VARCHAR  NOT NULL,  -- pubDate
     runtime       INTEGER  NOT NULL,  -- enclosure.length (seconds)
     url           VARCHAR  NOT NULL,  -- enclosure.url
-    FOREIGN KEY (podcast) REFERENCES Podcast(guid),
+    FOREIGN KEY (podcast) REFERENCES Podcast(guid)
 );
 
 CREATE TABLE IF NOT EXISTS EpisodeDownload (
@@ -19,5 +19,5 @@ CREATE TABLE IF NOT EXISTS EpisodeDownload (
     downloaded  VARCHAR  NOT NULL,  -- timestamp
     filesize    INTEGER  NOT NULL,  -- in bytes
     filename    VARCHAR  NOT NULL,
-    FOREIGN KEY (episode) REFERENCES PodcastEpisode(guid),
+    FOREIGN KEY (episode) REFERENCES PodcastEpisode(guid)
 );

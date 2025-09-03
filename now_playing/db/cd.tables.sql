@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS CDTrack (
     track    INTEGER  NOT NULL,
     name     VARCHAR  NOT NULL,
     seconds  INTEGER  NOT NULL,  -- length
-    FOREIGN KEY cd REFERENCES CompactDisc(catalog_number)
+    FOREIGN KEY (cd) REFERENCES CompactDisc(catalog_number)
 );
 
  -- TODO: AlbumCD (Album, CompactDisc, disc_number)
