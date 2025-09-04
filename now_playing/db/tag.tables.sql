@@ -2,8 +2,8 @@
 
 
 CREATE TABLE IF NOT EXISTS Tag (
-    name         VARCHAR  NOT NULL  UNIQUE,
-    description  VARCHAR
+    name     VARCHAR  NOT NULL  UNIQUE,
+    details  VARCHAR
 );
 -- NOTE: a tag can be a link to another table
 -- might need some special indicator for these tags
@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS TagRelation (
     relation  INTEGER  NOT NULL,
     main_tag  INTEGER  NOT NULL,
     FOREIGN KEY (sub_tag) REFERENCES Tag(rowid),
+    FOREIGN KEY (relation) REFERENCES Relation(rowid),
     FOREIGN KEY (main_tag) REFERENCES Tag(rowid)
 );
 -- e.g. TTRPG | is subset of | RPG

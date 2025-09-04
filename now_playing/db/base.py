@@ -30,7 +30,8 @@ class UserData:
         except Exception as exc:
             raise exc
 
-    def new(self):
+    def load_defaults(self):
+        """set up an empty database with the essentials"""
         scripts = (
             "cd.tables.sql",
             "podcast.tables.sql",
@@ -39,7 +40,8 @@ class UserData:
             "subscription.tables.sql",
             "time.tables.sql",
             "tag.enums.sql",
-            "tag.tables.sql")
+            "tag.tables.sql",
+            "tag.data.sql")
         folder = os.path.dirname(__file__)
         for script in scripts:
             self.run_script(os.path.join(folder, script))
@@ -75,5 +77,8 @@ class UserData:
     def from_cache(cls) -> UserData:
         out = cls()
         file = os.path.join(config.path["root"], "user.db")
+        new = not os.path.exists(file)
         out.db = sqlite3.connect(file)
+        if new:
+            out.load_defaults()
         return out
