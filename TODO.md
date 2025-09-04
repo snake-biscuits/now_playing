@@ -1,120 +1,99 @@
 # TODOs
 
- - [ ] Youtube
-   - [x] Feed Parser
-     - [x] `yt-dlp`
-   - [x] Download
-     - [x] Python: `yt-dlp`
-   - [ ] Playback
-     - [ ] Python: `mpv`
- - [ ] Podcasts
-   - [x] Feed Parser
-     - [x] Python: `lxml`
-   - [x] Download
-     - [x] Python: `urllib`
-   - [ ] Playback
-     - [ ] Python: `mpv`
+ - [x] `youtube`
+   - [x] `feed` (`yt-dlp`)
+   - [x] `download` (`yt-dlp`)
+   - [x] `client`
+ - [x] `podcast`
+   - [x] `feed` (`lxml`)
+   - [x] `download` (`urllib`)
+   - [x] `client`
+ - [ ] `playback`
+   - [ ] `mpv` wrapper
+   - [ ] slight rollback on unpause (user configurable)
+ - [ ] `ui`
+   - [ ] manage
+     - [ ] queue
+     - [ ] subscriptions
+       - [ ] add new (external search API)
+     - [ ] downloads
+     - [ ] playback
+       - [ ] speed
+   - [ ] system tray
+ - [ ] `db`
+   - [x] essentials
+     - [x] subscriptions & downloads
+       - [x] podcasts
+       - [x] youtube
+     - [x] playhead
+     - [x] timestamps
+     - [x] tags
+     - [x] queue
+   - [ ] subscriptions / queue / history
+     - [ ] use sql transactions
+   - [ ] people
+   - [ ] tags
+     - [x] essential tags (`tag.data.sql`)
+     - [ ] user tag definitions (via `ui`)
+ - [ ] automated processing
+   - [ ] description parser
+   - [ ] group filters (title regex, runtime etc.)
+   - [ ] references & citations
+ - [ ] CDs (original focus)
+   - [x] database
+   - [ ] archiving (ripping)
+   - [ ] artwork
+   - [ ] playback / queue
+ - [ ] bonus
+   - [ ] transcripts
+   - [ ] per-show EQ / volume / playback speed
+   - [ ] scheduling
+     - [ ] releases
+     - [ ] tasks (e.g. fold laundry + audio media)
+       - [ ] gaming
+       - [ ] reading
+       - [ ] TV episodes
+       - [ ] exercise
+       - [ ] meals
+       - [ ] screen break
+       - [ ] chill before bed
+     - [ ] sleep mode (end of chapter)
+   - [ ] books
+     - [ ] comics
+     - [ ] audio-books
+     - [ ] schedule reading time
+   - [ ] MPRIS / playerctl
+     * [mpris-python](https://github.com/airtower-luna/mpris-python) (315 lines)
+       - [pydbus](https://github.com/LEW21/pydbus)
+     * [mpris-notifier](https://github.com/l1na-forever/mpris-notifier/)
+       - almost useful, but annoyingly limited
+       - a good reference to build on tho
+   - [ ] notifications
+     - [ ] "Now Playing: ..."
+     - [ ] Animated Thumbnails
+     - [ ] MTV / VH1 style Overlay
+   - [ ] waybar module (like system tray)
+   - [ ] rich presence
+   - [ ] Studio
+     - [ ] mix deck to play around w/ music & samples
+     - [ ] Live DJ/VJ
+     - [ ] YTP editor (VeeDee)
+   - [ ] Live Stream Playback
+     - [ ] Watch Live
+     - [ ] Danmaku Chat
 
-> NOTE: Python `mpv` can run `yt-dlp` directly to play URLs
-> -- Pros:
-> --  * Simple
-> --  * No Caching Required
-> --  * No Download Queue Management
-> -- Cons:
-> --  * Less controls (quality / codec etc.)
-> --  * No offline copies
-> --  * Buffering
-
-
-## Collecting Youtube Subscriptions w/ `yt-dlp`
-```bash
-$ yt-dlp
-  :ytsubs
-  --cookies-from-browser firefox
-  --lazy-playlist
-  --dateafter today-0days
-  --playlist-end 50
-  --simulate
-  --print "%(release_date,upload_date)s | %(channel)s | %(title)s"
-```
-
-> using `--playlist-end 50` since `--break-on-reject` breaks on livestreams
-> can also use `yt-dlp` to download thumbnails or "storyboard"
-> TODO: get `id` & `channel_id` & assemble a `.json`
-
-
-## Podcasts
- * Manage Downloads
- * Queue
- * Sources
-   - Apple Podcasts
-   - RSS feeds
-   - YouTube / Twitch VoD (keep a link in DB)
-   - ... there are others
- * Playback speed
- * Remember position between sessions
-   - Rollback a few seconds on pause/play
- * skip ~15s forward / back
- * Host & Guest Database
-   - Star Chart
-   - Other Media Connections (YT, TV etc.)
- * Groups (Same Producer, Similar Category)
- * Description Formatting
-   - Cite works referenced / focus of episode
- * Timestamps
-   - Pause / Stop at chapter
- * Transcripts
-   - Rich Text? (links etc.)
- * Per-podcast audio balancing
- * Release Schedule Calendar
-
-
-## MPRIS controls
- * allows playerctl to handle play/pause etc.
- * [mpris-python](https://github.com/airtower-luna/mpris-python) (315 lines)
-   - [pydbus](https://github.com/LEW21/pydbus)
- * [mpris-notifier](https://github.com/l1na-forever/mpris-notifier/)
-   - almost useful, but annoyingly limited
-   - a good reference to build on tho
-
-
-## Waybar module
- * quick controls
-
-
-## Config
-```python
-os.path.expanduser("~/.config/now-playing/config.jsonc")
-# can python parse .jsonc? what about .ron?
-```
+### `mpv` direct url playback w/ `yt-dlp`
+ * Pros:
+   - Simple
+   - No Caching Required
+   - No Download Queue Management
+ * Cons:
+   - Less controls (quality / codec etc.)
+   - No offline copies
+   - Buffering
 
 
 ## Bonus Goals
- * Rich Presence
-   - track data
-   - playhead
- * Videogames
-   - schedule playtime
-   - howlongtobeat integration?
-   - retroachievements?
-   - PSN? Steam? GOG?
- * TV Episodes
-   - add to calendar
- * Books
-   - calibre?
- * External Sites
-   - backlogged
-   - letterboxed
-   - myanimelist
- * Studio
-   - Live DJ/VJ your media collection
-   - Pull Samples from Podcasts & Videos
-   - Make YTP w/ VeeDee
- * Task Scheduling
-   - Exercise playlist
-   - Chill Music Before Bed
-   - Second Screen Content Only
-   - Touch Grass
  * Live Streams
    - is it possible w/ yt-dlp & mpv?
    - how many features will still work?
@@ -178,6 +157,8 @@ os.path.expanduser("~/.config/now-playing/config.jsonc")
 
 ## System Tray
 Is it possible w/ Qt?
+[*YES*](https://doc.qt.io/qtforpython-6/examples/example_widgets_desktop_systray.html)
+See Also: [Media Player Example](https://doc.qt.io//qtforpython-6/examples/example_qtdemos_mediaplayer.html)
 
 
 ## Download Rules
