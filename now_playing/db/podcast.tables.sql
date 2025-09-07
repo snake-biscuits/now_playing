@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS Podcast (
 CREATE TABLE IF NOT EXISTS PodcastEpisode (
     podcast       VARCHAR  NOT NULL,
     title         VARCHAR  NOT NULL,  -- title
-    guid          VARCHAR  NOT NULL,  -- guid
+    guid          VARCHAR  NOT NULL  UNIQUE,  -- guid
     release_date  VARCHAR  NOT NULL,  -- pubDate
     runtime       INTEGER  NOT NULL,  -- enclosure.length (seconds)
     url           VARCHAR  NOT NULL,  -- enclosure.url

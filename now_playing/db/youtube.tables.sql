@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS ChannelVideo (
     title         VARCHAR  NOT NULL,
     release_date  VARCHAR  NOT NULL,
     runtime       INTEGER  NOT NULL,
-    guid          VARCHAR  NOT NULL,  -- watch?v={GUID}
+    guid          VARCHAR  NOT NULL  UNIQUE,  -- watch?v={GUID}
     FOREIGN KEY (channel) REFERENCES Channel(guid)
 );
 
