@@ -1,12 +1,16 @@
 from typing import List
 
+from . import browse
+
+
 # from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (
     QApplication,
-    QHBoxLayout,
+    QGridLayout,
     QLabel,
     QMainWindow,
-    QTabWidget)
+    QTabWidget,
+    QWidget)
 
 
 class MainWindow(QMainWindow):
@@ -14,18 +18,27 @@ class MainWindow(QMainWindow):
         super().__init__(parent)
 
         tabs = QTabWidget()
-        tabs.addTab(QLabel("Audio"), "Podcasts & Music")
-        tabs.addTab(QLabel("Video"), "Youtube & Videos")
-        tabs.addTab(QLabel("Books"), "Books")
-        tabs.addTab(QLabel("Files"), "Downloads")
+
+        audio = browse.audio.AudioPool()
+
+        tabs.addTab(audio, "&Audio")
+        tabs.addTab(QLabel("Video"), "&Video")
+        tabs.addTab(QLabel("Books"), "&Books")
+        tabs.addTab(QLabel("Files"), "&Downloads")
 
         viewer = QLabel("Viewer")
 
-        main = QHBoxLayout()
-        main.addWidget(tabs)
-        main.addWidget(viewer)
+        main = QGridLayout()
+        main.addWidget(tabs, 0, 0)
+        main.addWidget(viewer, 0, 1)
 
-        self.setCentralWidget(main)
+        main.setColumnStretch(0, 3)
+        main.setColumnStretch(1, 1)
+
+        core = QWidget()
+        core.setLayout(main)
+
+        self.setCentralWidget(core)
 
 
 def main(argv: List[str]):
