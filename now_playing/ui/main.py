@@ -1,6 +1,7 @@
 from typing import List
 
 from . import browse
+from . import queue
 
 
 # from PySide6.QtCore import Qt
@@ -26,19 +27,20 @@ class MainWindow(QMainWindow):
         tabs.addTab(QLabel("Books"), "&Books")
         tabs.addTab(QLabel("Files"), "&Downloads")
 
-        viewer = QLabel("Viewer")
+        # TODO: QGridLayout (vertical)
+        # -- mini player (playback controls)
+        # -- queue / media description / metadata
+        viewer = queue.MediaQueue()
 
-        main = QGridLayout()
-        main.addWidget(tabs, 0, 0)
-        main.addWidget(viewer, 0, 1)
+        layout = QGridLayout()
+        layout.addWidget(tabs, 0, 0)
+        layout.setColumnStretch(0, 3)
+        layout.addWidget(viewer, 0, 1)
+        layout.setColumnStretch(1, 1)
 
-        main.setColumnStretch(0, 3)
-        main.setColumnStretch(1, 1)
-
-        core = QWidget()
-        core.setLayout(main)
-
-        self.setCentralWidget(core)
+        main = QWidget()
+        main.setLayout(layout)
+        self.setCentralWidget(main)
 
 
 def main(argv: List[str]):

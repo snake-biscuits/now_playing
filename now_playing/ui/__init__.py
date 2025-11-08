@@ -1,11 +1,14 @@
-__all__ = ["browse", "main", "tray"]
+__all__ = ["browse", "main", "tray", "queue"]
 
-from . import browse  # audio, video & text
+from . import browse  # audio, video, text & podcasts
 # from . import calendar  # releases & plans
 from . import main
 # from . import play  # music, podcast, video, manga
 from . import tray  # system tray [prototype]
-# from . import queue  # basic vertical queue
+from . import queue
+# QueuedMedia & MediaQueue
+
+# NOTE: currently just a mock-up, not linked to db yet
 
 # TODO: widgets:
 # -- Queue
